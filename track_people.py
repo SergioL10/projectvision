@@ -33,7 +33,7 @@ wmax= 500
 
 #import pdb; pdb.set_trace() #debuginimo pradzia
 
-# Atvaizdavimo kintamieji
+# Variables de representación 
 cnt_up=0
 cnt_down=0
 line_down_color=(255,0,0)
@@ -70,7 +70,7 @@ while(cap.isOpened()):
     maskOriginal=mask
 
     _, contours0, hierarchy = cv2.findContours(mask,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_NONE)
-########jeigu conturas per didelis perpjaunu pusiau
+########Si el contorno es demasiado grande lo corto por la mitad 
     mask2_flag=0
     for cnt in contours0:
         area = cv2.contourArea(cnt)
@@ -99,7 +99,7 @@ while(cap.isOpened()):
         area = cv2.contourArea(cnt)
 
             #################
-            #   Tikrina ar objektas vis dar kadre, jei ne istrina    
+            #   Comprueba si el sujeto todavía está en el encuadre, si no se borra   
             #################     
         for i in persons:   
             i.updateDingimas(i.getDingimas()+1) #skaiciuoja kiek kadru neatsinaujino kiekvienas objektas
@@ -108,7 +108,7 @@ while(cap.isOpened()):
         
         if area > areaTH:
             #################
-            #   Objekto sekimas    
+            #   Seguimiento de Objetos   
             #################            
             M = cv2.moments(cnt)
             cx = int(M['m10']/M['m00'])
@@ -136,7 +136,7 @@ while(cap.isOpened()):
             cv2.imshow('img',img)
 
     #########################
-    # Trajektoriju atvaizdavimas  
+    # Mapeo de Trayectoria  
     #########################
     for i in persons:
         if len(i.getTracks()) >= 2:
@@ -146,7 +146,7 @@ while(cap.isOpened()):
 #        if i.getId() == 9:
 #            print str(i.getX()), ',', str(i.getY())
          #################
-         #   nustato ar kirto linija    #
+         #   Determina sí cruzó la línea     #
          #################
         if i.getDir() == None:
             i.kurEina( pts_L2[0,1] ,pts_L1[0,1])   #      def kurEina(bSottom_line,top_line):
@@ -162,7 +162,7 @@ while(cap.isOpened()):
         cv2.putText(frame, str(i.getId()),(i.getX(),i.getY()),font,0.7,i.getRGB(),1,cv2.LINE_AA)
 
     #########################
-    # Atvaizdavimas  
+    # Representación  
     #########################
     str_up='UP: '+ str(cnt_up)
     str_down='DOWN: '+ str(cnt_down)

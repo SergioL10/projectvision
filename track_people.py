@@ -9,7 +9,7 @@ import datetime
 #https://www.youtube.com/watch?v=S26G0a7u9d4
 
 
-cap = cv2.VideoCapture('rtsp://admin:123@XX.XXX.XXX.XX/profile4/media.smp') #Open video file , reik nurodyti video faila ir jo path
+cap = cv2.VideoCapture('rtsp://admin:123@XX.XXX.XXX.XX/profile4/media.smp') #Open video file , Especificar el archivo de video y su ruta 
 fgbg = cv2.createBackgroundSubtractorMOG2(detectShadows = True) #Create the background substractor
 
 kernelOp = np.ones((3,3),np.uint8)
